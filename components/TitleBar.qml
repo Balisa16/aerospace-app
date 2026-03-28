@@ -15,9 +15,10 @@ Item {
     signal requestMinimize()
     signal requestMaxRestore()
     signal requestClose()
+    signal pageChanged(int page)
 
     implicitHeight: 40
-    implicitWidth: 400
+    implicitWidth: 500
 
     // Rectangle {
     //     id: barBg
@@ -59,6 +60,32 @@ Item {
         anchors.rightMargin: 16
         spacing: 12
 
+        RowLayout {
+            id: pageBtn
+            spacing: 8
+
+            ControlButton {
+                content: "qrc:/qt/qml/Aerospace/assets/icons/rocket-lunch.png"
+                mode: Theme.ButtonMode.Icon
+                hoverTint: Theme.button1
+                onClicked: root.pageChanged(0)
+            }
+
+            ControlButton {
+                content: "qrc:/qt/qml/Aerospace/assets/icons/cloud-sun.png"
+                mode: Theme.ButtonMode.Icon
+                hoverTint: Theme.button1
+                onClicked: root.pageChanged(1)
+            }
+
+            ControlButton {
+                content: "qrc:/qt/qml/Aerospace/assets/icons/bell.png"
+                mode: Theme.ButtonMode.Icon
+                hoverTint: Theme.button1
+                onClicked: root.pageChanged(2)
+            }
+        }
+
         Item { Layout.fillWidth: true }
 
         Label {
@@ -74,21 +101,21 @@ Item {
         RowLayout {
             spacing: 8
 
-            WindowControlButton {
-                symbol: "—"
+            ControlButton {
+                content: "-"
                 hoverTint: Qt.rgba(1.0, 0.85, 0.2, 0.22)
                 onClicked: root.requestMinimize()
             }
 
-            WindowControlButton {
-                symbol: root.maximized ? "❐" : "□"
+            ControlButton {
+                content: root.maximized ? "❐" : "□"
                 hoverTint: Qt.rgba(0.3, 1.0, 0.5, 0.20)
                 onClicked: root.requestMaxRestore()
             }
 
-            WindowControlButton {
-                symbol: "×"
-                hoverTint: Qt.rgba(1.0, 0.35, 0.35, 0.24)
+            ControlButton {
+                content: "×"
+                hoverTint: Theme.danger
                 onClicked: root.requestClose()
             }
         }

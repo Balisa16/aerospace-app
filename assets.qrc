@@ -1,12 +1,19 @@
 <RCC>
     <qresource prefix="/qt/qml/Aerospace">
+        <file>assets/icons/add.png</file>
+        <file>assets/icons/bell.png</file>
+        <file>assets/icons/cloud-sun.png</file>
+        <file>assets/icons/exclamation.png</file>
+        <file>assets/icons/logo.png</file>
+        <file>assets/icons/map-marker.png</file>
+        <file>assets/icons/mode-portrait.png</file>
+        <file>assets/icons/rocket-lunch.png</file>
+        <file>assets/icons/temperature-high.png</file>
+        
         <file>assets/images/earth_nasa.png</file>
         <file>assets/images/space_2k.png</file>
         <file>assets/fonts/SN_Pro/static/SNPro-Regular.ttf</file>
         <file>assets/fonts/Audiowide/Audiowide-Regular.ttf</file>
         <file>assets/ISS.glb</file>
-        <file>assets/icons/engine.png</file>
-        <file>assets/icons/logo.png</file>
-        <file>assets/icons/satellite.png</file>
     </qresource>
 </RCC>

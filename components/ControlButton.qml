@@ -1,11 +1,15 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
+import Aerospace 1.0
 
 Item {
     id: root
 
-    property string symbol: "×"
+    property int mode: Theme.ButtonMode.Text
+    property string content: ""
+    property int contentSize: 14
+    property color contentColor: Theme.textPrimary
     property color hoverTint: Qt.rgba(1, 1, 1, 0.15)
 
     signal clicked()
@@ -36,10 +40,31 @@ Item {
 
     Text {
         anchors.centerIn: parent
-        text: root.symbol
-        color: Theme.textPrimary
-        font.pixelSize: 14
+        text: root.mode === Theme.ButtonMode.Text ? root.content : ""
+        color: root.contentColor
+        font.pixelSize: root.contentSize
         font.bold: true
+        visible: root.mode === Theme.ButtonMode.Text
+    }
+
+    Image {
+        id: iconSourceItem
+        anchors.centerIn: parent
+        source: root.mode === Theme.ButtonMode.Icon ? root.content : ""
+        width: root.contentSize
+        height: root.contentSize
+        visible: false
+        smooth: true
+        mipmap: true
+    }
+
+    MultiEffect {
+        anchors.fill: iconSourceItem
+        source: iconSourceItem
+        visible: root.mode === Theme.ButtonMode.Icon
+
+        colorization: 1.0
+        colorizationColor: root.contentColor
     }
 
     MouseArea {

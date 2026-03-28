@@ -117,7 +117,7 @@ ApplicationWindow {
         }
     }
 
-    CustomTitleBar {
+    TitleBar {
         id: titleBar
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -136,165 +136,22 @@ ApplicationWindow {
         onRequestClose: exitDialog.open()
         dragTarget: app
         z: 100
+        onPageChanged: function(page){
+            app.currentPage = page
+        }
     }
 
-    ColumnLayout {
+
+    StackLayout {
         anchors.fill: parent
-        spacing: 0
+        currentIndex: app.currentPage
 
-
-        RowLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            spacing: 18
-
-            GlassPanel {
-                Layout.preferredWidth: 310
-                title_height: 100
-                radius: 20
-                Layout.fillHeight: true
-
-                ColumnLayout {
-                    anchors.fill: parent
-                    anchors.topMargin: 0
-                    anchors.leftMargin: 24
-                    anchors.rightMargin: 0
-                    anchors.bottomMargin: 18
-                    spacing: 16
-
-                    Item { Layout.preferredHeight: 8 }
-
-                    RowLayout {
-                        spacing: 12
-                        anchors.topMargin: 30
-
-                        Rectangle {
-                            width: 46
-                            height: 46
-                            radius: 16
-                            color: Theme.accentSoft
-                            border.color: Theme.borderStrong
-                            border.width: 1
-
-                            Text {
-                                anchors.centerIn: parent
-                                text: "🚀"
-                                font.pixelSize: 22
-                            }
-                        }
-
-                        ColumnLayout {
-                            spacing: 2
-
-                            Label {
-                                text: "Aerospace System"
-                                color: Theme.textPrimary
-                                font.pixelSize: 22
-                                font.bold: true
-                            }
-
-                            Label {
-                                text: "Mission Control Suite"
-                                color: Theme.textMuted
-                                font.pixelSize: 12
-                            }
-                        }
-                    }
-
-                    Item { Layout.preferredHeight: 12 }
-
-                    SidebarButton {
-                        id: iss_live_btn
-                        text: "ISS Live View"
-                        iconText: "◫"
-                        selected: app.currentPage === 0
-                        onClicked: app.currentPage = 0
-                    }
-
-                    SidebarButton {
-                        text: "Launch Control"
-                        iconText: "⬆"
-                        selected: app.currentPage === 1
-                        onClicked: app.currentPage = 1
-                    }
-
-                    SidebarButton {
-                        text: "Health Systems"
-                        iconText: "◌"
-                        selected: app.currentPage === 2
-                        onClicked: app.currentPage = 2
-                    }
-
-                    SidebarButton {
-                        text: "Flight Logs"
-                        iconText: "☰"
-                        selected: app.currentPage === 3
-                        onClicked: app.currentPage = 3
-                    }
-
-                    SidebarButton {
-                        text: "Settings"
-                        iconText: "⚙"
-                        selected: app.currentPage === 4
-                        onClicked: app.currentPage = 4
-                    }
-
-                    Item { Layout.fillHeight: true }
-
-                    GlassPanel {
-                        Layout.preferredHeight: 150
-                        Layout.preferredWidth: iss_live_btn.buttonWidth
-                        padding: 14
-
-                        ColumnLayout {
-                            anchors.fill: parent
-                            spacing: 8
-
-                            Label {
-                                text: "Mission Status"
-                                color: Theme.textMuted
-                                font.pixelSize: 12
-                            }
-
-                            Label {
-                                text: "Vehicle Ready"
-                                color: Theme.textPrimary
-                                font.pixelSize: 22
-                                font.bold: true
-                            }
-
-                            Label {
-                                text: "All primary systems nominal. Wind and telemetry within launch constraints."
-                                color: Theme.textSecondary
-                                wrapMode: Text.WrapAnywhere
-                                font.pixelSize: 12
-                            }
-                        }
-                    }
-                }
-            }
-
-            Rectangle {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        radius: 20
-        color: "transparent"
-        clip: true
-        layer.enabled: true
-
-        StackLayout {
-            anchors.fill: parent
-            currentIndex: app.currentPage
-
-            SatelitePage {}
-            LaunchPage {}
-            HealthPage {}
-            LogsPage {}
-            SettingsPage {}
-        }
+        SatelitePage {}
+        LaunchPage {}
+        // HealthPage {}
+        LogsPage {}
     }
-        }
-    }
+
     Dialog {
         id: exitDialog
         modal: true

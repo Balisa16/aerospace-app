@@ -17,6 +17,7 @@ QtObject {
     readonly property color textPrimary: darkMode ? "#F4F8FF" : "#16324F"
     readonly property color textSecondary: darkMode ? "#D5E4F7" : "#36526E"
     readonly property color textMuted: darkMode ? "#93A9C3" : "#5D7793"
+    readonly property color button1: darkMode ? "#80FFFFFF" : "#90FFFFFF"
 
     readonly property color accent: darkMode ? "#6FCBFF" : "#198CFF"
     readonly property color accentSoft: darkMode ? "#335E8FFF" : "#804AA3FF"
@@ -36,5 +37,10 @@ QtObject {
         OK,
         Init,
         Error
+    }
+
+    enum ButtonMode{
+        Text,
+        Icon
     }
 }

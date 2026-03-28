@@ -26,17 +26,15 @@ qt_add_qml_module(AerospaceApp
         components/GlassButton.qml
         components/SidebarButton.qml
         components/StatCard.qml
-        components/CustomTitleBar.qml
-        components/WindowControlButton.qml
+        components/TitleBar.qml
+        components/ControlButton.qml
         components/GaugeBar.qml
         components/LogView.qml
         components/LaunchStep.qml
         pages/SatelitePage.qml
-        pages/OverviewPage.qml
         pages/LaunchPage.qml
         pages/HealthPage.qml
         pages/LogsPage.qml
-        pages/SettingsPage.qml
 )
 
 qt_add_resources(APP_RESOURCES

@@ -87,7 +87,7 @@ Item {
                         Item { Layout.fillHeight: true }
 
                         Label {
-                            text: "Safety interlocks are simulated in this demo UI. Connect these controls to your backend or telemetry bus for live operations."
+                            text: "Safety interlocks are simulated."
                             color: Theme.textMuted
                             font.pixelSize: 12
                             wrapMode: Text.WordWrap
