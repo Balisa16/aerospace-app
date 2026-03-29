@@ -9,6 +9,7 @@ Item {
     ColumnLayout {
         anchors.fill: parent
         spacing: 18
+        anchors.margins: 20
 
         Label {
             text: "Launch Control"
@@ -21,11 +22,12 @@ Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
             spacing: 18
-
+        
             GlassPanel {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 padding: 18
+                width: 100
 
                 ColumnLayout {
                     anchors.fill: parent
@@ -80,9 +82,9 @@ Item {
                             font.bold: true
                         }
 
-                        GlassButton { text: "Hold Countdown"; accentColor: Theme.warning; Layout.fillWidth: true }
-                        GlassButton { text: "Resume Sequence"; accentColor: Theme.success; Layout.fillWidth: true }
-                        GlassButton { text: "Abort Mission"; accentColor: Theme.danger; Layout.fillWidth: true }
+                        GlassButton { text: "Hold Countdown"; buttonColor: Theme.warning; Layout.fillWidth: true }
+                        GlassButton { text: "Resume Sequence"; buttonColor: Theme.success; Layout.fillWidth: true }
+                        GlassButton { text: "Abort Mission"; buttonColor: Theme.danger; Layout.fillWidth: true }
 
                         Item { Layout.fillHeight: true }
 

@@ -20,6 +20,7 @@ Item {
     ColumnLayout {
         anchors.fill: parent
         spacing: 18
+        anchors.margins: 20
 
         RowLayout {
             Layout.fillWidth: true

@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Effects
+import Qt5Compat.GraphicalEffects
 import Aerospace 1.0
 
 Item {
@@ -48,7 +48,7 @@ Item {
     }
 
     Image {
-        id: iconSourceItem
+        id: iconMask
         anchors.centerIn: parent
         source: root.mode === Theme.ButtonMode.Icon ? root.content : ""
         width: root.contentSize
@@ -58,13 +58,23 @@ Item {
         mipmap: true
     }
 
-    MultiEffect {
-        anchors.fill: iconSourceItem
-        source: iconSourceItem
+    Rectangle {
+        id: iconColorSource
+        anchors.centerIn: parent
+        width: root.contentSize
+        height: root.contentSize
+        color: root.contentColor
+        visible: false
+    }
+
+    OpacityMask {
+        anchors.centerIn: parent
+        width: root.contentSize
+        height: root.contentSize
         visible: root.mode === Theme.ButtonMode.Icon
 
-        colorization: 1.0
-        colorizationColor: root.contentColor
+        source: iconColorSource
+        maskSource: iconMask
     }
 
     MouseArea {

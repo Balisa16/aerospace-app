@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import Aerospace 1.0
 
 Rectangle {
     id: root
@@ -26,17 +27,18 @@ Rectangle {
             width: 36
             height: 36
             radius: 18
-            color: done ? Theme.success : active ? Theme.accent : Qt.rgba(1,1,1,0.12)
+            color: root.done ? Theme.success : root.active ? Theme.accent : Qt.rgba(1,1,1,0.12)
 
             Label {
                 anchors.centerIn: parent
-                text: done ? "✓" : active ? "●" : "…"
-                color: done || active ? "#0A1424" : Theme.textSecondary
+                text: root.done ? "✓" : root.active ? "●" : "•"
+                color: root.done || root.active ? "#0A1424" : Theme.textSecondary
                 font.bold: true
             }
         }
 
         ColumnLayout {
+            id: descr
             Layout.fillWidth: true
             spacing: 2
 
@@ -45,12 +47,18 @@ Rectangle {
                 color: Theme.textPrimary
                 font.pixelSize: 14
                 font.bold: true
+
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignLeft
             }
 
             Label {
                 text: root.statusText
                 color: Theme.textSecondary
                 font.pixelSize: 12
+
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignLeft
             }
         }
     }

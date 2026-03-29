@@ -39,8 +39,8 @@ GlassPanel {
                         width: 10
                         height: 10
                         radius: 5
-                        color: root.modelData.level === "WARN" ? Theme.warning
-                               : root.modelData.level === "ERROR" ? Theme.danger
+                        color: modelData.level === "WARN" ? Theme.warning
+                               : modelData.level === "ERROR" ? Theme.danger
                                : Theme.success
                     }
 
@@ -49,7 +49,7 @@ GlassPanel {
                         spacing: 3
 
                         Label {
-                            text: root.modelData.time + "  ·  " + root.modelData.level
+                            text: modelData.time + "  ·  " + modelData.level
                             color: Theme.textMuted
                             font.pixelSize: 11
                         }

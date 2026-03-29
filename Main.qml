@@ -195,7 +195,7 @@ ApplicationWindow {
 
                 GlassButton {
                     text: "Close"
-                    accentColor: Theme.danger
+                    buttonColor: Theme.danger
                     onClicked: {
                         exitDialog.close()
                         app.close()

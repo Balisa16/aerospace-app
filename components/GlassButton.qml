@@ -1,11 +1,10 @@
 import QtQuick
 import QtQuick.Controls
+import Aerospace 1.0
 
 Button {
     id: root
-
-    property color accentColor: Theme.accent
-
+    property color buttonColor: Theme.accent
     implicitHeight: 48
     implicitWidth: 150
 
@@ -15,13 +14,13 @@ Button {
                          : root.hovered ? Qt.rgba(1, 1, 1, 0.18)
                                         : Qt.rgba(1, 1, 1, 0.12)
         border.width: 1
-        border.color: root.hovered ? accentColor : Theme.border
+        border.color: root.hovered ? root.buttonColor : Theme.border
 
         Rectangle {
             anchors.fill: parent
             anchors.margins: 1
             radius: parent.radius - 1
-            color: accentColor
+            color: root.buttonColor
             opacity: root.down ? 0.22 : 0.12
         }
     }

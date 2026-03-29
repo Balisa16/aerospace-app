@@ -67,6 +67,7 @@ Item {
             ControlButton {
                 content: "qrc:/qt/qml/Aerospace/assets/icons/rocket-lunch.png"
                 mode: Theme.ButtonMode.Icon
+                contentColor: Theme.textPrimary
                 hoverTint: Theme.button1
                 onClicked: root.pageChanged(0)
             }
@@ -74,6 +75,7 @@ Item {
             ControlButton {
                 content: "qrc:/qt/qml/Aerospace/assets/icons/cloud-sun.png"
                 mode: Theme.ButtonMode.Icon
+                contentColor: Theme.textPrimary
                 hoverTint: Theme.button1
                 onClicked: root.pageChanged(1)
             }
@@ -81,6 +83,7 @@ Item {
             ControlButton {
                 content: "qrc:/qt/qml/Aerospace/assets/icons/bell.png"
                 mode: Theme.ButtonMode.Icon
+                contentColor: Theme.textPrimary
                 hoverTint: Theme.button1
                 onClicked: root.pageChanged(2)
             }
@@ -102,19 +105,25 @@ Item {
             spacing: 8
 
             ControlButton {
-                content: "-"
+                content: "qrc:/qt/qml/Aerospace/assets/icons/minus-small.png"
+                mode: Theme.ButtonMode.Icon
+                contentColor: Theme.textPrimary
                 hoverTint: Qt.rgba(1.0, 0.85, 0.2, 0.22)
                 onClicked: root.requestMinimize()
             }
 
             ControlButton {
-                content: root.maximized ? "❐" : "□"
+                content: root.maximized ? "qrc:/qt/qml/Aerospace/assets/icons/square.png" : "qrc:/qt/qml/Aerospace/assets/icons/expand.png"
+                mode: Theme.ButtonMode.Icon
+                contentColor: Theme.textPrimary
                 hoverTint: Qt.rgba(0.3, 1.0, 0.5, 0.20)
                 onClicked: root.requestMaxRestore()
             }
 
             ControlButton {
-                content: "×"
+                content: "qrc:/qt/qml/Aerospace/assets/icons/power.png"
+                mode: Theme.ButtonMode.Icon
+                contentColor: Theme.textPrimary
                 hoverTint: Theme.danger
                 onClicked: root.requestClose()
             }

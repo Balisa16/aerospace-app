@@ -33,7 +33,6 @@ qt_add_qml_module(AerospaceApp
         components/LaunchStep.qml
         pages/SatelitePage.qml
         pages/LaunchPage.qml
-        pages/HealthPage.qml
         pages/LogsPage.qml
 )
 
