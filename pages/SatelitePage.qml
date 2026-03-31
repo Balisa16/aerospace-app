@@ -68,15 +68,17 @@ Item {
         return new Date(ts * 1000).toUTCString()
     }
 
+    property real renderLongitudeOffsetDeg: -90
+
     function latLonAltToXYZ(latDeg, lonDeg, altKm) {
         const r = (earthRadiusKm + altKm) * kmToUnit
 
         const lat = degToRad(latDeg)
-        const lon = degToRad(lonDeg)
+        const lon = degToRad(lonDeg + root.renderLongitudeOffsetDeg)
 
         const x = r * Math.cos(lat) * Math.cos(lon)
         const y = r * Math.sin(lat)
-        const z = r * Math.cos(lat) * Math.sin(lon)
+        const z = -r * Math.cos(lat) * Math.sin(lon)
 
         return Qt.vector3d(x, y, z)
     }
@@ -402,6 +404,7 @@ Item {
         updateSunDirection()
     }
 
+
     Rectangle {
         id: roundedMask
         anchors.fill: parent
@@ -418,7 +421,6 @@ Item {
         layer.enabled: true
         visible: false
 
-        // Sky you want to keep
         Image {
             anchors.fill: parent
             source: "qrc:/qt/qml/Aerospace/assets/images/space_2k.png"
