@@ -10,7 +10,13 @@ qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(AerospaceApp
     main.cpp
+    src/space.cpp
+    include/space.h
     assets.qrc
+)
+target_include_directories(AerospaceApp
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
 )
 
 set_source_files_properties(components/Theme.qml PROPERTIES
@@ -34,6 +40,9 @@ qt_add_qml_module(AerospaceApp
         pages/SatelitePage.qml
         pages/LaunchPage.qml
         pages/LogsPage.qml
+    SOURCES
+        include/space.h
+        src/space.cpp
 )
 
 qt_add_resources(APP_RESOURCES

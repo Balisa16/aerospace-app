@@ -1,8 +1,11 @@
+#include "space.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
+
+    qmlRegisterType<Space>("Aerospace", 1, 0, "Space");
 
     QQmlApplicationEngine engine;
     const QUrl url("qrc:/qt/qml/Aerospace/Main.qml");
