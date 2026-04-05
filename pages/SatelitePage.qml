@@ -471,80 +471,73 @@ Item {
     }
 
     Rectangle {
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.margins: 16
-        width: 350
-        height: 230
-        radius: 14
-        color: '#89101418'
-        border.color: '#33f78a8a'
+        color: "transparent"
+        width: page_title.implicitWidth + 32
+        height: page_title.implicitHeight + 32
 
-        Column {
-            anchors.fill: parent
-            anchors.margins: 12
-            spacing: 6
+        Text {
+            id: page_title
+            text: "ISS Live View"
+            color: Theme.text_primary
+            font: Theme.make_font_audio_wave(2, true, false)
 
-            Text {
-                text: "ISS Live View"
-                color: "white"
-                font: Theme.make_font_audio_wave(1.3, true, false)
-            }
+            anchors.centerIn: parent
+        }
+    }
 
-            Text {
+    Rectangle {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 16
+
+        radius: Theme.window_radius - 16
+        color: "#89101418"
+        border.color: "#33f78a8a"
+
+        implicitWidth: contentRow.implicitWidth + 24
+        implicitHeight: contentRow.implicitHeight + 24
+
+        Row {
+            id: contentRow
+            anchors.centerIn: parent
+            spacing: 10
+
+            TelemetryData {
                 textFormat: Text.RichText
-
-                property string status_color: api_state_color(root.api_state)
-
-                text: space.format_utc(root.iss_timestamp)
-                    + " <span style='color:" + status_color + ";'>("
-                    + root.api_status + ")</span>"
-
-                color: "#d0d7de"
-                font.bold: true
-                font.pixelSize: 14
+                text: (root.iss_timestamp > 0 ? space.format_utc(root.iss_timestamp) : "")
+                        + " <span style='color:" + api_state_color(root.api_state) + ";'>("
+                        + root.api_status + ")</span>"
+                font: Theme.make_font_audio_wave(1, true, false)
+                color: Theme.text_primary
             }
 
-            Text {
-                text: "Latitude: " + root.iss_latitude.toFixed(6)
-                color: "#d0d7de"
-                font.pixelSize: 14
+            TelemetryData { 
+                maximumWidth: 160
+                text: "Lat: " + root.iss_latitude.toFixed(6)
             }
-
-            Text {
-                text: "Longitude: " + root.iss_longitude.toFixed(6)
-                color: "#d0d7de"
-                font.pixelSize: 14
+            TelemetryData { 
+                maximumWidth: 160
+                text: "Lon: " + root.iss_longitude.toFixed(6) 
             }
-
-            Text {
-                text: "Altitude: " + root.iss_altitude_km.toFixed(2) + " km"
-                color: "#d0d7de"
-                font.pixelSize: 14
+            TelemetryData { 
+                maximumWidth: 160
+                text: "Alt: " + root.iss_altitude_km.toFixed(2) + " km" 
             }
-
-            Text {
-                text: "Velocity: " + root.iss_velocity_kmh.toFixed(2) + " km/h"
-                color: "#d0d7de"
-                font.pixelSize: 14
+            TelemetryData { 
+                maximumWidth: 160
+                text: "Vel: " + root.iss_velocity_kmh.toFixed(2) + " km/h" 
             }
-
-            Text {
-                text: "Visibility: " + root.iss_visibility
-                color: "#d0d7de"
-                font.pixelSize: 14
+            TelemetryData { 
+                maximumWidth: 160
+                text: "Vis: " + root.iss_visibility 
             }
-
-            Text {
-                text: "Sub-solar Lat: " + root.subsolar_lat
-                color: "#d0d7de"
-                font.pixelSize: 14
+            TelemetryData { 
+                maximumWidth: 160
+                text: "Sub-solar Lat: " + root.subsolar_lat 
             }
-
-            Text {
-                text: "Sub-solar Lon: " + root.subsolar_lon
-                color: "#d0d7de"
-                font.pixelSize: 14
+            TelemetryData { 
+                maximumWidth: 240
+                text: "Sub-solar Lon: " + root.subsolar_lon 
             }
         }
     }

@@ -30,8 +30,7 @@ Item {
             Label {
                 text: "Flight Logs"
                 color: Theme.text_primary
-                font.pixelSize: 32
-                font.bold: true
+                font: Theme.make_font_audio_wave(2, true, false)
             }
 
             Item { Layout.fillWidth: true }

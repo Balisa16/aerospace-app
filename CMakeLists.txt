@@ -38,6 +38,7 @@ qt_add_qml_module(aerospace
         components/GaugeBar.qml
         components/LogView.qml
         components/LaunchStep.qml
+        components/TelemetryData.qml
         pages/SatelitePage.qml
         pages/LaunchPage.qml
         pages/LogsPage.qml

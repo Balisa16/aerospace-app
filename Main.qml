@@ -159,7 +159,6 @@ ApplicationWindow {
             id:satellites_page
         }
         LaunchPage {}
-        // HealthPage {}
         LogsPage {}
     }
 

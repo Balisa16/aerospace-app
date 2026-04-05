@@ -1,6 +1,6 @@
 # Aerospace UI
 
-[![Qt](https://img.shields.io/badge/Qt-6.5+-green.svg)](https://www.qt.io/)
+[![Qt](https://img.shields.io/badge/Qt-6.11+-green.svg)](https://www.qt.io/)
 [![Build](https://img.shields.io/badge/build-CMake-blue.svg)](https://cmake.org/)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](#license)
 
@@ -18,7 +18,7 @@ This project demonstrates a modern QML-based architecture combining 2D UI and 3D
 
 Application results can be found in the [`docs`](./docs) directory.
 
-![Preview](./docs/preview.png)
+![Preview](./docs/page1.png)
 
 ---
 
@@ -34,7 +34,7 @@ Application results can be found in the [`docs`](./docs) directory.
 
 ## Requirements
 
-- Qt 6.5 or newer  
+- Qt 6.11 or newer  
 - Qt Quick  
 - Qt Quick Controls  
 - QtQuick3D  

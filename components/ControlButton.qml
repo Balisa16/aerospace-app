@@ -11,7 +11,8 @@ Item {
     property int contentSize: 14
     property color contentColor: Theme.text_primary
     property color hoverTint: Qt.rgba(1, 1, 1, 0.15)
-
+    property bool hovered: false
+    
     signal clicked()
 
     width: 28
@@ -28,6 +29,7 @@ Item {
 
     Rectangle {
         id: bg
+        y: root.hovered ? -2 : 0
         anchors.fill: parent
         radius: width / 2
         color: mouse.containsMouse ? root.hoverTint : Qt.rgba(1, 1, 1, 0.08)
@@ -82,7 +84,8 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-
+        onEntered: root.hovered = true
+        onExited: root.hovered = false
         onPressed: root.scaleValue = 0.90
         onReleased: {
             root.scaleValue = 1.0

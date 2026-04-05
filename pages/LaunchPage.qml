@@ -14,8 +14,7 @@ Item {
         Label {
             text: "Launch Control"
             color: Theme.text_primary
-            font.pixelSize: 32
-            font.bold: true
+            font: Theme.make_font_audio_wave(2, true, false)
         }
 
         RowLayout {
@@ -55,15 +54,6 @@ Item {
                 Layout.preferredWidth: 360
                 Layout.fillHeight: true
                 spacing: 18
-
-                // StatCard {
-                //     Layout.fillWidth: true
-                //     Layout.preferredHeight: 170
-                //     title: "Current Phase"
-                //     value: "Tanking"
-                //     subtitle: "Cryogenic loading and pressurization sequence active."
-                //     accentColor: Theme.accent
-                // }
 
                 GlassPanel {
                     Layout.fillWidth: true
