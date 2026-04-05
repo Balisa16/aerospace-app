@@ -16,7 +16,7 @@ Rectangle {
                 : active ? Qt.rgba(0.44, 0.80, 1.0, 0.16)
                          : Qt.rgba(1, 1, 1, 0.06)
     border.width: 1
-    border.color: done ? Theme.success : active ? Theme.accent : Theme.border
+    border.color: done ? Theme.success_color : active ? Theme.accent : Theme.border_color
 
     RowLayout {
         anchors.fill: parent
@@ -27,12 +27,12 @@ Rectangle {
             width: 36
             height: 36
             radius: 18
-            color: root.done ? Theme.success : root.active ? Theme.accent : Qt.rgba(1,1,1,0.12)
+            color: root.done ? Theme.success_color : root.active ? Theme.accent : Qt.rgba(1,1,1,0.12)
 
             Label {
                 anchors.centerIn: parent
                 text: root.done ? "✓" : root.active ? "●" : "•"
-                color: root.done || root.active ? "#0A1424" : Theme.textSecondary
+                color: root.done || root.active ? "#0A1424" : Theme.text_secondary
                 font.bold: true
             }
         }
@@ -44,7 +44,7 @@ Rectangle {
 
             Label {
                 text: root.stepName
-                color: Theme.textPrimary
+                color: Theme.text_primary
                 font.pixelSize: 14
                 font.bold: true
 
@@ -54,7 +54,7 @@ Rectangle {
 
             Label {
                 text: root.statusText
-                color: Theme.textSecondary
+                color: Theme.text_secondary
                 font.pixelSize: 12
 
                 Layout.fillWidth: true

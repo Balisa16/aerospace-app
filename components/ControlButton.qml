@@ -9,7 +9,7 @@ Item {
     property int mode: Theme.ButtonMode.Text
     property string content: ""
     property int contentSize: 14
-    property color contentColor: Theme.textPrimary
+    property color contentColor: Theme.text_primary
     property color hoverTint: Qt.rgba(1, 1, 1, 0.15)
 
     signal clicked()
@@ -32,7 +32,7 @@ Item {
         radius: width / 2
         color: mouse.containsMouse ? root.hoverTint : Qt.rgba(1, 1, 1, 0.08)
         border.width: 1
-        border.color: mouse.containsMouse ? Theme.borderStrong : Theme.border
+        border.color: mouse.containsMouse ? Theme.border_color_strong : Theme.border_color
 
         Behavior on color { ColorAnimation { duration: 140 } }
         Behavior on border.color { ColorAnimation { duration: 140 } }

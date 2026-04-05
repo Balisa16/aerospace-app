@@ -21,13 +21,13 @@ GlassPanel {
 
         Label {
             text: root.title
-            color: Theme.textMuted
+            color: Theme.text_muted
             font.pixelSize: 12
         }
 
         Label {
             text: root.value
-            color: Theme.textPrimary
+            color: Theme.text_primary
             font.pixelSize: 28
             font.bold: true
         }
@@ -42,7 +42,7 @@ GlassPanel {
 
         Label {
             text: root.subtitle
-            color: Theme.textSecondary
+            color: Theme.text_secondary
             font.pixelSize: 12
             wrapMode: Text.WordWrap
             Layout.fillWidth: true

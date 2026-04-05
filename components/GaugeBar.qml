@@ -21,7 +21,7 @@ Item {
 
             Label {
                 text: root.label
-                color: Theme.textSecondary
+                color: Theme.text_secondary
                 font.pixelSize: 13
             }
 
@@ -29,7 +29,7 @@ Item {
 
             Label {
                 text: Math.round(root.value * 100) + "%"
-                color: Theme.textPrimary
+                color: Theme.text_primary
                 font.pixelSize: 13
                 font.bold: true
             }
@@ -41,7 +41,7 @@ Item {
             radius: 7
             color: Qt.rgba(1, 1, 1, 0.10)
             border.width: 1
-            border.color: Theme.border
+            border.color: Theme.border_color
 
             Rectangle {
                 width: parent.width * Math.max(0, Math.min(1, root.value))

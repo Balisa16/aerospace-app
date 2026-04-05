@@ -14,7 +14,9 @@ Item {
         { "time": "18:06:03", "level": "INFO",  "message": "Propellant loading valve response nominal." },
         { "time": "18:07:28", "level": "INFO",  "message": "Autosequence controller heartbeat green." },
         { "time": "18:08:50", "level": "ERROR", "message": "Simulated sensor timeout on non-critical thermal channel." },
-        { "time": "18:09:22", "level": "INFO",  "message": "Fallback telemetry route engaged successfully." }
+        { "time": "18:09:22", "level": "INFO",  "message": "Fallback telemetry route engaged successfully." },
+        { "time": "18:09:23", "level": "INFO",  "message": "Fallback telemetry route engaged successfully." },
+        { "time": "18:09:24", "level": "INFO",  "message": "Fallback telemetry route engaged successfully." }
     ]
 
     ColumnLayout {
@@ -27,7 +29,7 @@ Item {
 
             Label {
                 text: "Flight Logs"
-                color: Theme.textPrimary
+                color: Theme.text_primary
                 font.pixelSize: 32
                 font.bold: true
             }

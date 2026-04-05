@@ -14,7 +14,7 @@ Button {
                          : root.hovered ? Qt.rgba(1, 1, 1, 0.18)
                                         : Qt.rgba(1, 1, 1, 0.12)
         border.width: 1
-        border.color: root.hovered ? root.buttonColor : Theme.border
+        border.color: root.hovered ? root.buttonColor : Theme.border_color
 
         Rectangle {
             anchors.fill: parent
@@ -27,7 +27,7 @@ Button {
 
     contentItem: Text {
         text: root.text
-        color: Theme.textPrimary
+        color: Theme.text_primary
         font.pixelSize: 14
         font.bold: true
         horizontalAlignment: Text.AlignHCenter

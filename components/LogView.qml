@@ -28,7 +28,7 @@ GlassPanel {
                 radius: 20
                 color: Qt.rgba(1, 1, 1, 0.08)
                 border.width: 1
-                border.color: Theme.border
+                border.color: Theme.border_color
 
                 RowLayout {
                     anchors.fill: parent
@@ -39,9 +39,9 @@ GlassPanel {
                         width: 10
                         height: 10
                         radius: 5
-                        color: modelData.level === "WARN" ? Theme.warning
-                               : modelData.level === "ERROR" ? Theme.danger
-                               : Theme.success
+                        color: modelData.level === "WARN" ? Theme.warning_color
+                               : modelData.level === "ERROR" ? Theme.danger_color
+                               : Theme.success_color
                     }
 
                     ColumnLayout {
@@ -50,13 +50,13 @@ GlassPanel {
 
                         Label {
                             text: modelData.time + "  ·  " + modelData.level
-                            color: Theme.textMuted
+                            color: Theme.text_muted
                             font.pixelSize: 11
                         }
 
                         Label {
                             text: modelData.message
-                            color: Theme.textPrimary
+                            color: Theme.text_primary
                             font.pixelSize: 13
                             wrapMode: Text.WordWrap
                             Layout.fillWidth: true

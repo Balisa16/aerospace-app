@@ -17,9 +17,9 @@ Item {
     //     id: base
     //     anchors.fill: parent
     //     radius: root.radius
-    //     color: Theme.panelFill
+    //     color: Theme.panel_fill
     //     border.width: 1
-    //     border.color: Theme.border
+    //     border.color: Theme.border_color
     //     opacity: 0.18
     // }
 
@@ -27,17 +27,17 @@ Item {
         id: tintLayer
         anchors.fill: parent
         radius: root.radius
-        color: Theme.panelTint
+        color: Theme.panel_tint
         opacity: 0.26
     }
 
     Rectangle {
         anchors.fill: parent
         radius: root.radius
-        color: Theme.panelOverlay
+        color: Theme.panel_overlay
         opacity: 0.12
         border.width: 1
-        border.color: Theme.borderStrong
+        border.color: Theme.border_color_strong
     }
 
     Rectangle {

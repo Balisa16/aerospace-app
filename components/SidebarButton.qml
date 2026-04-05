@@ -23,7 +23,7 @@ Button {
                  : "transparent"
 
         border.width: 1
-        border.color: root.selected ? Theme.borderStrong : "transparent"
+        border.color: root.selected ? Theme.border_color_strong : "transparent"
 
         // Left accent indicator (like macOS sidebar)
         Rectangle {
@@ -46,13 +46,13 @@ Button {
 
         Label {
             text: root.iconText
-            color: root.selected ? Theme.accent : Theme.textSecondary
+            color: root.selected ? Theme.accent : Theme.text_secondary
             font.pixelSize: 17
         }
 
         Label {
             text: root.text
-            color: root.selected ? Theme.textPrimary : Theme.textSecondary
+            color: root.selected ? Theme.text_primary : Theme.text_secondary
             font.pixelSize: 14
             font.bold: root.selected
             Layout.fillWidth: true

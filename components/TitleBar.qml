@@ -9,7 +9,7 @@ Item {
 
     property QtObject theme
     property var dragTarget
-    property int windowRadius: implicitHeight
+    property int window_radius: implicitHeight
     property bool maximized: false
 
     signal requestMinimize()
@@ -23,11 +23,11 @@ Item {
     // Rectangle {
     //     id: barBg
     //     anchors.fill: parent
-    //     bottomLeftRadius: root.windowRadius
-    //     bottomRightRadius: root.windowRadius
+    //     bottomLeftRadius: root.window_radius
+    //     bottomRightRadius: root.window_radius
     //     color: Qt.rgba(1, 1, 1, 0.06)
     //     border.width: 1
-    //     border.color: Theme.border
+    //     border.color: Theme.border_color
     // }
 
     Rectangle {
@@ -35,9 +35,9 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         height: parent.height
-        bottomLeftRadius: root.windowRadius
-        bottomRightRadius: root.windowRadius
-        color: Theme.panelTint
+        bottomLeftRadius: root.window_radius
+        bottomRightRadius: root.window_radius
+        color: Theme.panel_tint
         // opacity: 0.3
     }
 
@@ -67,24 +67,24 @@ Item {
             ControlButton {
                 content: "qrc:/qt/qml/Aerospace/assets/icons/rocket-lunch.png"
                 mode: Theme.ButtonMode.Icon
-                contentColor: Theme.textPrimary
-                hoverTint: Theme.button1
+                contentColor: Theme.text_primary
+                hoverTint: Theme.button_color
                 onClicked: root.pageChanged(0)
             }
 
             ControlButton {
                 content: "qrc:/qt/qml/Aerospace/assets/icons/cloud-sun.png"
                 mode: Theme.ButtonMode.Icon
-                contentColor: Theme.textPrimary
-                hoverTint: Theme.button1
+                contentColor: Theme.text_primary
+                hoverTint: Theme.button_color
                 onClicked: root.pageChanged(1)
             }
 
             ControlButton {
                 content: "qrc:/qt/qml/Aerospace/assets/icons/bell.png"
                 mode: Theme.ButtonMode.Icon
-                contentColor: Theme.textPrimary
-                hoverTint: Theme.button1
+                contentColor: Theme.text_primary
+                hoverTint: Theme.button_color
                 onClicked: root.pageChanged(2)
             }
         }
@@ -93,9 +93,8 @@ Item {
 
         Label {
             text: "Aerospace System"
-            color: Theme.textPrimary
-            font.pixelSize: 16
-            font.bold: true
+            color: Theme.text_primary
+            font: Theme.make_font_audio_wave(1.2, true, false)
             Layout.alignment: Qt.AlignHCenter
         }
 
@@ -107,7 +106,7 @@ Item {
             ControlButton {
                 content: "qrc:/qt/qml/Aerospace/assets/icons/minus-small.png"
                 mode: Theme.ButtonMode.Icon
-                contentColor: Theme.textPrimary
+                contentColor: Theme.text_primary
                 hoverTint: Qt.rgba(1.0, 0.85, 0.2, 0.22)
                 onClicked: root.requestMinimize()
             }
@@ -115,7 +114,7 @@ Item {
             ControlButton {
                 content: root.maximized ? "qrc:/qt/qml/Aerospace/assets/icons/square.png" : "qrc:/qt/qml/Aerospace/assets/icons/expand.png"
                 mode: Theme.ButtonMode.Icon
-                contentColor: Theme.textPrimary
+                contentColor: Theme.text_primary
                 hoverTint: Qt.rgba(0.3, 1.0, 0.5, 0.20)
                 onClicked: root.requestMaxRestore()
             }
@@ -123,8 +122,8 @@ Item {
             ControlButton {
                 content: "qrc:/qt/qml/Aerospace/assets/icons/power.png"
                 mode: Theme.ButtonMode.Icon
-                contentColor: Theme.textPrimary
-                hoverTint: Theme.danger
+                contentColor: Theme.text_primary
+                hoverTint: Theme.danger_color
                 onClicked: root.requestClose()
             }
         }

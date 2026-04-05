@@ -16,6 +16,7 @@ Item {
     property real distance: 220
     property real minDistance: 90
     property real maxDistance: 900
+    property int window_radius: Theme.window_radius
 
     // Live ISS telemetry
     property real iss_latitude: 0.0
@@ -41,11 +42,11 @@ Item {
     function api_state_color(state) {
         switch (state) {
         case Theme.APIState.OK:
-            return Theme.success
+            return Theme.success_color
         case Theme.APIState.Init:
-            return Theme.warning
+            return Theme.warning_color
         case Theme.APIState.Error:
-            return Theme.danger
+            return Theme.danger_color
         default:
             return "#d0d7de"
         }
@@ -251,7 +252,7 @@ Item {
     Rectangle {
         id: roundedMask
         anchors.fill: parent
-        radius: Theme.windowRadius
+        radius: root.window_radius
         color: "white"
         layer.enabled: true
         visible: false
@@ -487,8 +488,7 @@ Item {
             Text {
                 text: "ISS Live View"
                 color: "white"
-                font.pixelSize: 22
-                font.bold: true
+                font: Theme.make_font_audio_wave(1.3, true, false)
             }
 
             Text {

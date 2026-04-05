@@ -13,7 +13,7 @@ Item {
 
         Label {
             text: "Launch Control"
-            color: Theme.textPrimary
+            color: Theme.text_primary
             font.pixelSize: 32
             font.bold: true
         }
@@ -35,7 +35,7 @@ Item {
 
                     Label {
                         text: "Launch Sequence"
-                        color: Theme.textPrimary
+                        color: Theme.text_primary
                         font.pixelSize: 20
                         font.bold: true
                     }
@@ -77,20 +77,20 @@ Item {
 
                         Label {
                             text: "Control Actions"
-                            color: Theme.textPrimary
+                            color: Theme.text_primary
                             font.pixelSize: 20
                             font.bold: true
                         }
 
-                        GlassButton { text: "Hold Countdown"; buttonColor: Theme.warning; Layout.fillWidth: true }
-                        GlassButton { text: "Resume Sequence"; buttonColor: Theme.success; Layout.fillWidth: true }
-                        GlassButton { text: "Abort Mission"; buttonColor: Theme.danger; Layout.fillWidth: true }
+                        GlassButton { text: "Hold Countdown"; buttonColor: Theme.warning_color; Layout.fillWidth: true }
+                        GlassButton { text: "Resume Sequence"; buttonColor: Theme.success_color; Layout.fillWidth: true }
+                        GlassButton { text: "Abort Mission"; buttonColor: Theme.danger_color; Layout.fillWidth: true }
 
                         Item { Layout.fillHeight: true }
 
                         Label {
                             text: "Safety interlocks are simulated."
-                            color: Theme.textMuted
+                            color: Theme.text_muted
                             font.pixelSize: 12
                             wrapMode: Text.WordWrap
                             Layout.fillWidth: true

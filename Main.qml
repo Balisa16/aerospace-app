@@ -25,11 +25,12 @@ ApplicationWindow {
     }
     
     Rectangle {
+        id: app_frame
         anchors.fill: parent
-        radius: app.maximized ? 0 : Theme.windowRadius
+        radius: app.maximized ? 0 : Theme.window_radius
         gradient: Gradient {
-            GradientStop { position: 0.0; color: Theme.bgTop }
-            GradientStop { position: 1.0; color: Theme.bgBottom }
+            GradientStop { position: 0.0; color: Theme.top_bg }
+            GradientStop { position: 1.0; color: Theme.bottom_bg }
         }
     }
 
@@ -124,14 +125,22 @@ ApplicationWindow {
 
         // Layout.fillWidth: true
         Layout.preferredHeight: 40
-        windowRadius: Theme.windowRadius
+        window_radius: Theme.window_radius
         maximized: app.maximized
         onRequestMinimize: app.showMinimized()
         onRequestMaxRestore: {
             if (app.visibility === Window.Maximized)
+            {
                 app.showNormal()
+                app_frame.radius = Theme.window_radius
+                satellites_page.window_radius = Theme.window_radius
+            }
             else
+            {
                 app.showMaximized()
+                app_frame.radius = 0
+                satellites_page.window_radius = 0
+            }
         }
         onRequestClose: exitDialog.open()
         dragTarget: app
@@ -146,7 +155,9 @@ ApplicationWindow {
         anchors.fill: parent
         currentIndex: app.currentPage
 
-        SatelitePage {}
+        SatelitePage {
+            id:satellites_page
+        }
         LaunchPage {}
         // HealthPage {}
         LogsPage {}
@@ -164,7 +175,7 @@ ApplicationWindow {
             radius: 22
             color: Qt.rgba(0.10, 0.14, 0.20, 0.96)
             border.width: 1
-            border.color: Theme.borderStrong
+            border.color: Theme.border_color_strong
         }
 
         contentItem: ColumnLayout {
@@ -172,14 +183,13 @@ ApplicationWindow {
 
             Label {
                 text: "Close Confirmation"
-                color: Theme.textPrimary
-                font.pixelSize: 18
-                font.bold: true
+                color: Theme.text_primary
+                font: Theme.make_font_audio_wave(1.2, true, false)
             }
 
             Label {
                 text: "Are you sure you want to close this application?"
-                color: Theme.textSecondary
+                color: Theme.text_secondary
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
             }
@@ -195,7 +205,7 @@ ApplicationWindow {
 
                 GlassButton {
                     text: "Close"
-                    buttonColor: Theme.danger
+                    buttonColor: Theme.danger_color
                     onClicked: {
                         exitDialog.close()
                         app.close()
