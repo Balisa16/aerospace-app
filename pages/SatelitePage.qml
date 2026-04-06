@@ -34,6 +34,12 @@ Item {
     property var trail_points: []
     property bool trail_loading: false
 
+    // Future trajectory
+    property int future_duration_sec: 45 * 60
+    property int future_step_sec: 60
+    property var future_points: []
+    property var future_segments: []
+
     // Sun
     property vector3d sun_direction: Qt.vector3d(1, 0, 0)
     property string subsolar_lat: "0.00°"
@@ -183,6 +189,17 @@ Item {
                         root.iss_timestamp,
                         root.trail_duration_sec
                     )
+
+                    root.future_points = space.predict_trajectory_points(
+                        collected,
+                        root.future_duration_sec,
+                        root.future_step_sec
+                    )
+
+                    root.future_segments = space.build_line_segments(
+                        root.future_points,
+                        0.004
+                    )
                 }
             })
         }
@@ -250,7 +267,7 @@ Item {
     }
 
     Rectangle {
-        id: roundedMask
+        id: rounded_mask
         anchors.fill: parent
         radius: root.window_radius
         color: "white"
@@ -259,7 +276,7 @@ Item {
     }
 
     Item {
-        id: contentLayer
+        id: content_layer
         anchors.fill: parent
         layer.enabled: true
         visible: false
@@ -310,7 +327,7 @@ Item {
             }
 
             Node {
-                id: worldRoot
+                id: world_root
 
                 Model {
                     id: earth
@@ -347,7 +364,7 @@ Item {
                 }
 
                 Repeater3D {
-                    id: trailRepeater
+                    id: trail
                     model: root.trail_points.length
 
                     Model {
@@ -370,6 +387,67 @@ Item {
 
                         materials: DefaultMaterial {
                             diffuseColor: Qt.rgba(1.0, 0.5, 0.5, point_data.alpha)
+                            opacity: point_data.alpha
+                            lighting: DefaultMaterial.NoLighting
+                        }
+                    }
+                }
+
+                Repeater3D {
+                    id: future_line
+                    model: root.future_segments.length
+
+                    Node {
+                        required property int index
+                        property var seg: root.future_segments[index]
+
+                        position: Qt.vector3d(seg.mx, seg.my, seg.mz)
+                        rotation: Quaternion.fromAxisAndAngle(
+                            Qt.vector3d(seg.ax, seg.ay, seg.az),
+                            seg.angleDeg
+                        )
+
+                        Model {
+                            source: "#Cylinder"
+                            scale: Qt.vector3d(
+                                seg.thickness,
+                                seg.length / 100.0,
+                                seg.thickness
+                            )
+
+                            materials: DefaultMaterial {
+                                diffuseColor: Qt.rgba(0.35, 0.75, 1.0, seg.alpha)
+                                opacity: seg.alpha
+                                lighting: DefaultMaterial.NoLighting
+                            }
+                        }
+                    }
+                }
+
+                Repeater3D {
+                    id: future_point
+                    model: root.future_points.length
+
+                    Model {
+                        required property int index
+                        source: "#Sphere"
+
+                        property var point_data: root.future_points[index]
+
+                        position: Qt.vector3d(
+                            point_data.x,
+                            point_data.y,
+                            point_data.z
+                        )
+
+                        scale: Qt.vector3d(
+                            point_data.size,
+                            point_data.size,
+                            point_data.size
+                        )
+
+                        materials: DefaultMaterial {
+                            diffuseColor: Qt.rgba(0.35, 0.75, 1.0, point_data.alpha)
                             opacity: point_data.alpha
                             lighting: DefaultMaterial.NoLighting
                         }
@@ -420,9 +498,9 @@ Item {
 
     MultiEffect {
         anchors.fill: parent
-        source: contentLayer
+        source: content_layer
         maskEnabled: true
-        maskSource: roundedMask
+        maskSource: rounded_mask
     }
 
     MouseArea {
@@ -511,33 +589,39 @@ Item {
                 color: Theme.text_primary
             }
 
-            TelemetryData { 
+            TelemetryData {
                 maximumWidth: 160
                 text: "Lat: " + root.iss_latitude.toFixed(6)
             }
-            TelemetryData { 
+
+            TelemetryData {
                 maximumWidth: 160
-                text: "Lon: " + root.iss_longitude.toFixed(6) 
+                text: "Lon: " + root.iss_longitude.toFixed(6)
             }
-            TelemetryData { 
+
+            TelemetryData {
                 maximumWidth: 160
-                text: "Alt: " + root.iss_altitude_km.toFixed(2) + " km" 
+                text: "Alt: " + root.iss_altitude_km.toFixed(2) + " km"
             }
-            TelemetryData { 
+
+            TelemetryData {
                 maximumWidth: 160
-                text: "Vel: " + root.iss_velocity_kmh.toFixed(2) + " km/h" 
+                text: "Vel: " + root.iss_velocity_kmh.toFixed(2) + " km/h"
             }
-            TelemetryData { 
+
+            TelemetryData {
                 maximumWidth: 160
-                text: "Vis: " + root.iss_visibility 
+                text: "Vis: " + root.iss_visibility
             }
-            TelemetryData { 
+
+            TelemetryData {
                 maximumWidth: 160
-                text: "Sub-solar Lat: " + root.subsolar_lat 
+                text: "Sub-solar Lat: " + root.subsolar_lat
             }
-            TelemetryData { 
+
+            TelemetryData {
                 maximumWidth: 240
-                text: "Sub-solar Lon: " + root.subsolar_lon 
+                text: "Sub-solar Lon: " + root.subsolar_lon
             }
         }
     }

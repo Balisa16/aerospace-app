@@ -88,6 +88,63 @@ int Space::day_of_year_utc(const QDateTime &utc_dt) const {
     return utc_dt.toUTC().date().dayOfYear();
 }
 
+QVector3D Space::rotate_around_axis(const QVector3D &v, const QVector3D &axis,
+                                    double angle_rad) const {
+    const QVector3D k = normalize(axis);
+
+    const double c = std::cos(angle_rad);
+    const double s = std::sin(angle_rad);
+
+    return v * c + QVector3D::crossProduct(k, v) * s +
+           k * QVector3D::dotProduct(k, v) * (1.0 - c);
+}
+
+QVector3D Space::estimate_orbit_normal(const QVariantList &raw_points) const {
+    if (raw_points.size() < 3)
+        return QVector3D(0.0f, 1.0f, 0.0f);
+
+    QVector3D accum(0.0f, 0.0f, 0.0f);
+
+    for (qsizetype i = 1; i + 1 < raw_points.size(); ++i) {
+        const QVariantMap p0 = raw_points[i - 1].toMap();
+        const QVariantMap p1 = raw_points[i].toMap();
+        const QVariantMap p2 = raw_points[i + 1].toMap();
+
+        const QVector3D v0 = normalize(lla_to_xyz(
+            p0.value("latitude").toDouble(), p0.value("longitude").toDouble(),
+            p0.value("altitude").toDouble()));
+
+        const QVector3D v1 = normalize(lla_to_xyz(
+            p1.value("latitude").toDouble(), p1.value("longitude").toDouble(),
+            p1.value("altitude").toDouble()));
+
+        const QVector3D v2 = normalize(lla_to_xyz(
+            p2.value("latitude").toDouble(), p2.value("longitude").toDouble(),
+            p2.value("altitude").toDouble()));
+
+        QVector3D n1 = QVector3D::crossProduct(v0, v1);
+        QVector3D n2 = QVector3D::crossProduct(v1, v2);
+
+        if (n1.lengthSquared() > 1e-8f)
+            accum += normalize(n1);
+
+        if (n2.lengthSquared() > 1e-8f)
+            accum += normalize(n2);
+    }
+
+    if (accum.lengthSquared() < 1e-8f)
+        return QVector3D(0.0f, 1.0f, 0.0f);
+
+    return normalize(accum);
+}
+double Space::angle_between(const QVector3D &a, const QVector3D &b) const {
+    const QVector3D na = normalize(a);
+    const QVector3D nb = normalize(b);
+
+    const double d = clamp(QVector3D::dotProduct(na, nb), -1.0, 1.0);
+    return std::acos(d);
+}
+
 QVariantMap Space::solar_param(const QDateTime &utc_dt) const {
     const QDateTime utc = utc_dt.toUTC();
     const int year = utc.date().year();
@@ -203,6 +260,130 @@ QVariantList Space::chunk_array(const QVariantList &input,
     return chunks;
 }
 
+QVariantList Space::predict_trajectory_points(const QVariantList &raw_points,
+                                              int predict_duration_sec,
+                                              int step_sec) const {
+    QVariantList pts;
+
+    if (raw_points.size() < 2 || predict_duration_sec <= 0 || step_sec <= 0)
+        return pts;
+
+    QVariantList sorted = raw_points;
+    std::sort(sorted.begin(), sorted.end(),
+              [](const QVariant &a, const QVariant &b) {
+                  return a.toMap().value("timestamp").toLongLong() <
+                         b.toMap().value("timestamp").toLongLong();
+              });
+
+    const QVariantMap last0 = sorted[sorted.size() - 2].toMap();
+    const QVariantMap last1 = sorted[sorted.size() - 1].toMap();
+
+    const qint64 ts0 = last0.value("timestamp").toLongLong();
+    const qint64 ts1 = last1.value("timestamp").toLongLong();
+    const qint64 dt = ts1 - ts0;
+
+    if (dt <= 0)
+        return pts;
+
+    const QVector3D p0 = lla_to_xyz(last0.value("latitude").toDouble(),
+                                    last0.value("longitude").toDouble(),
+                                    last0.value("altitude").toDouble());
+
+    const QVector3D p1 = lla_to_xyz(last1.value("latitude").toDouble(),
+                                    last1.value("longitude").toDouble(),
+                                    last1.value("altitude").toDouble());
+
+    const QVector3D orbit_normal = estimate_orbit_normal(sorted);
+
+    const double r0 = p0.length();
+    const double r1 = p1.length();
+    const double orbit_radius = (r0 + r1) * 0.5;
+
+    QVector3D cur = normalize(p1) * orbit_radius;
+
+    double ang_step = angle_between(p0, p1) / static_cast<double>(dt);
+
+    const double orient =
+        QVector3D::dotProduct(orbit_normal, QVector3D::crossProduct(p0, p1));
+
+    if (orient < 0.0)
+        ang_step = -ang_step;
+
+    for (int t = step_sec; t <= predict_duration_sec; t += step_sec) {
+        const double ang = ang_step * static_cast<double>(t);
+        const QVector3D pos = rotate_around_axis(cur, orbit_normal, ang);
+
+        QVariantMap pt;
+        pt["x"] = pos.x();
+        pt["y"] = pos.y();
+        pt["z"] = pos.z();
+        pt["alpha"] = lerp(0.95, 0.25,
+                           static_cast<double>(t) /
+                               static_cast<double>(predict_duration_sec));
+        pt["size"] = lerp(0.010, 0.006,
+                          static_cast<double>(t) /
+                              static_cast<double>(predict_duration_sec));
+        pt["t_sec"] = t;
+
+        pts.push_back(pt);
+    }
+
+    return pts;
+}
+
+QVariantList Space::build_line_segments(const QVariantList &points,
+                                        double thickness) const {
+    QVariantList segments;
+
+    if (points.size() < 2)
+        return segments;
+
+    for (qsizetype i = 1; i < points.size(); ++i) {
+        const QVariantMap a = points[i - 1].toMap();
+        const QVariantMap b = points[i].toMap();
+
+        const QVector3D p0(a.value("x").toFloat(), a.value("y").toFloat(),
+                           a.value("z").toFloat());
+
+        const QVector3D p1(b.value("x").toFloat(), b.value("y").toFloat(),
+                           b.value("z").toFloat());
+
+        const QVector3D d = p1 - p0;
+        const float len = d.length();
+
+        if (len < 1e-6f)
+            continue;
+
+        const QVector3D mid = (p0 + p1) * 0.5f;
+        const QVector3D dir = d / len;
+
+        const QVector3D yAxis(0.0f, 1.0f, 0.0f);
+        const QVector3D rotAxis = QVector3D::crossProduct(yAxis, dir);
+
+        const double dot = clamp(QVector3D::dotProduct(yAxis, dir), -1.0, 1.0);
+        const double angleDeg = rad_to_deg(std::acos(dot));
+
+        QVariantMap seg;
+        seg["mx"] = mid.x();
+        seg["my"] = mid.y();
+        seg["mz"] = mid.z();
+
+        seg["ax"] = rotAxis.x();
+        seg["ay"] = rotAxis.y();
+        seg["az"] = rotAxis.z();
+        seg["angleDeg"] = angleDeg;
+
+        seg["length"] = len;
+        seg["thickness"] = thickness;
+
+        seg["alpha"] = b.value("alpha").toDouble(); // far segments will fade
+
+        segments.push_back(seg);
+    }
+
+    return segments;
+}
+
 QVariantList Space::rebuild_trail_points(const QVariantList &raw_points,
                                          qint64 now_ts,
                                          int trail_duration_sec) const {
@@ -229,7 +410,7 @@ QVariantList Space::rebuild_trail_points(const QVariantList &raw_points,
                                    0.0, 1.0);
 
         const double alpha = lerp(0.10, 0.95, age01);
-        const double size = lerp(0.006, 0.020, age01);
+        const double size = lerp(0.006, 0.010, age01);
 
         QVariantMap pt;
         pt["x"] = pos.x();

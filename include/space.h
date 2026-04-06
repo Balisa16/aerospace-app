@@ -71,6 +71,13 @@ class Space : public QObject {
     rebuild_trail_points(const QVariantList &raw_points, qint64 now_ts,
                          int trail_duration_sec) const;
 
+    Q_INVOKABLE QVariantList
+    predict_trajectory_points(const QVariantList &raw_points,
+                              int predict_duration_sec, int step_sec) const;
+
+    Q_INVOKABLE QVariantList build_line_segments(
+        const QVariantList &points, double thickness = 0.003) const;
+
     double get_earth_radius_km() const;
     double get_km_to_unit() const;
     double get_primitive_sphere_radius() const;
@@ -83,6 +90,11 @@ class Space : public QObject {
 
   private:
     int day_of_year_utc(const QDateTime &utc_dt) const;
+
+    QVector3D rotate_around_axis(const QVector3D &v, const QVector3D &axis,
+                                 double angle_rad) const;
+    QVector3D estimate_orbit_normal(const QVariantList &raw_points) const;
+    double angle_between(const QVector3D &a, const QVector3D &b) const;
 
   private:
     static constexpr double earth_radius_km_ = 6371.0008;
