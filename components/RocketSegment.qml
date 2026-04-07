@@ -6,21 +6,20 @@ Item {
 
     property string name: ""
     property string status: "normal"
-    property color normalColor: "#A8A7C5"
-    property color warningColor: Theme.warning_color
+    property color normal_color: "#A8A7C5"
+    property color warning_color: Theme.warning_color
     property color failed_color: Theme.danger_color
-    property color borderColor: "black"
+    property color border_color: "black"
     property int borderWidth: 2
     property real radius: 12
 
-    // external shape source
     default property alias content: shape_container.data
 
-    readonly property color currentColor: {
+    readonly property color current_color: {
         switch (status) {
-        case "warning": return warningColor
+        case "warning": return warning_color
         case "failed":  return failed_color
-        default:        return normalColor
+        default:        return normal_color
         }
     }
 
