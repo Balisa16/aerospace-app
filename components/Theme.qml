@@ -61,6 +61,7 @@ QtObject {
     readonly property color warning_color: dark_mode ? "#FFB86B" : "#F59E0B"
     readonly property color danger_color: dark_mode ? "#FF7C91" : "#E54B6B"
     readonly property color success_color: dark_mode ? "#7EF0AE" : "#22C55E"
+    readonly property color normal_color: dark_mode ? "#A8A7C5" : '#747386'
 
     readonly property color border_color: dark_mode ? "#40FFFFFF" : "#66FFFFFF"
     readonly property color border_color_strong: dark_mode ? "#70BFE2FF" : "#70A7C4E9"

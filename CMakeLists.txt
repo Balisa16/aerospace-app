@@ -39,6 +39,7 @@ qt_add_qml_module(aerospace
         components/LogView.qml
         components/LaunchStep.qml
         components/TelemetryData.qml
+        components/RocketSegment.qml
         pages/SatelitePage.qml
         pages/LaunchPage.qml
         pages/LogsPage.qml
